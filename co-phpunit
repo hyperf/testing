@@ -57,9 +57,13 @@
 
     require PHPUNIT_COMPOSER_INSTALL;
 
-    $code = PHPUnit\TextUI\Command::main(false);
-    if ($code > 0) {
-        exit($code);
+    try {
+        $code = PHPUnit\TextUI\Command::main(false);
+        if ($code > 0) {
+            exit($code);
+        }
+    } catch (\Swoole\ExitException $e) {
+        // ignore exit exception
     }
 
     swoole_event_exit();
